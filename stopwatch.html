@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Stopwatch</title>
+</head>
+<style>
+ body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.stopwatch {
+    text-align: center;
+    font-size: 36px;
+    background-color: rgb(46, 66, 66);
+    color: brown;
+    width: 400px;
+    height: 200px;
+    padding: 10px;
+    border: 5px solid red;
+    font-size: 50px;
+}
+
+.controls {
+    margin-top: 20px;
+}
+
+button {
+    font-size: 20px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: azure;
+    font-family: cursive;
+}   
+
+</style>
+<body>
+    
+    <div class="stopwatch">
+        
+        <div class="time" id="display">00:00:00</div>
+        <div class="controls">
+            <button id="startStop" onclick="startStop()">Start</button>
+            <button id="reset" onclick="reset()">Reset</button>
+        </div>
+    </div>
+    
+
+<script>
+let isRunning = false;
+let interval;
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+
+function startStop() {
+    if (isRunning) {
+        clearInterval(interval);
+        document.getElementById("startStop").textContent = "Start";
+    } else {
+        interval = setInterval(updateTime, 1000);
+        document.getElementById("startStop").textContent = "Stop";
+    }
+    isRunning = !isRunning;
+}
+
+function reset() {
+    clearInterval(interval);
+    isRunning = false;
+    seconds = 0;
+    minutes = 0;
+    hours = 0;
+    document.getElementById("display").textContent = "00:00:00";
+    document.getElementById("startStop").textContent = "Start";
+}
+
+function updateTime() {
+    seconds++;
+    if (seconds === 60) {
+        seconds = 0;
+        minutes++;
+    }
+    if (minutes === 60) {
+        minutes = 0;
+        hours++;
+    }
+    const display = `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+    document.getElementById("display").textContent = display;
+}
+
+function padZero(value) {
+    return value < 10 ? `0${value}` : value;
+}
+
+</script>
+</body>
+</html>
+
+
